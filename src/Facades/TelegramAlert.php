@@ -7,9 +7,8 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static self to(string $text)
- * @method static self toChannel(string $text)
+ * @method static self toChat(string $text)
  * @method static void message(string $text)
- * @method static void blocks(array $blocks)
  *
  * @see \Marcorivm\TelegramAlerts\TelegramAlert
  */

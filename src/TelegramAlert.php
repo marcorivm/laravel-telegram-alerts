@@ -5,7 +5,7 @@ namespace Marcorivm\TelegramAlerts;
 class TelegramAlert
 {
     protected string $webhookUrlName = 'default';
-    protected ?string $channel = null;
+    protected ?string $chatName = null;
 
     public function to(string $webhookUrlName): self
     {
@@ -14,9 +14,9 @@ class TelegramAlert
         return $this;
     }
 
-    public function toChannel(string $channel): self
+    public function toChat(string $chatName): self
     {
-        $this->channel = $channel;
+        $this->chatName = $chatName;
 
         return $this;
     }
@@ -29,27 +29,17 @@ class TelegramAlert
             return;
         }
 
-        $job = Config::getJob([
-            'text' => $text,
-            'webhookUrl' => $webhookUrl,
-            'channel' => $this->channel,
-        ]);
+        $chatId = $this->chatName ? Config::getChatId($this->chatName) : Config::getChatId('default');
 
-        dispatch($job);
-    }
-
-    public function blocks(array $blocks): void
-    {
-        $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
-
-        if (!$webhookUrl) {
+        if (!$chatId) {
             return;
         }
 
+
         $job = Config::getJob([
-            'blocks' => $blocks,
+            'text' => $text,
             'webhookUrl' => $webhookUrl,
-            'channel' => $this->channel,
+            'chatId' => $chatId,
         ]);
 
         dispatch($job);

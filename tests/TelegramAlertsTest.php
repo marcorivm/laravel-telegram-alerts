@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Bus;
 use Marcorivm\TelegramAlerts\Exceptions\JobClassDoesNotExist;
 use Marcorivm\TelegramAlerts\Exceptions\WebhookUrlNotValid;
 use Marcorivm\TelegramAlerts\Facades\TelegramAlert;
-use Marcorivm\TelegramAlerts\Jobs\SendToTelegramChannelJob;
+use Marcorivm\TelegramAlerts\Jobs\SendToTelegramChatJob;
 
 beforeEach(function () {
     Bus::fake();
@@ -15,7 +15,7 @@ it('can dispatch a job to send a message to telegram using the default webhook u
 
     TelegramAlert::message('test-data');
 
-    Bus::assertDispatched(SendToTelegramChannelJob::class);
+    Bus::assertDispatched(SendToTelegramChatJob::class);
 });
 
 it('can dispatch a job to send a set of blocks to telegram using the default webhook url', function () {
@@ -31,7 +31,7 @@ it('can dispatch a job to send a set of blocks to telegram using the default web
         ],
     ]);
 
-    Bus::assertDispatched(SendToTelegramChannelJob::class);
+    Bus::assertDispatched(SendToTelegramChatJob::class);
 });
 
 it('can dispatch a job to send a message to telegram using an alternative webhook url', function () {
@@ -39,15 +39,15 @@ it('can dispatch a job to send a message to telegram using an alternative webhoo
 
     TelegramAlert::to('marketing')->message('test-data');
 
-    Bus::assertDispatched(SendToTelegramChannelJob::class);
+    Bus::assertDispatched(SendToTelegramChatJob::class);
 });
 
-it('can dispatch a job to send a message to telegram alternative channel', function () {
+it('can dispatch a job to send a message to telegram alternative chat', function () {
     config()->set('telegram-alerts.webhook_urls.default', 'https://test-domain.com');
 
-    TelegramAlert::toChannel('random')->message('test-data');
+    TelegramAlert::toChat('random')->message('test-data');
 
-    Bus::assertDispatched(SendToTelegramChannelJob::class);
+    Bus::assertDispatched(SendToTelegramChatJob::class);
 });
 
 it('will throw an exception for a non existing job class', function () {

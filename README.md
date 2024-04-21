@@ -42,7 +42,7 @@ return [
      * This job will send the message to Telegram. You can extend this
      * job to set timeouts, retries, etc...
      */
-    'job' => Marcorivm\TelegramAlerts\Jobs\SendToTelegramChannelJob::class,
+    'job' => Marcorivm\TelegramAlerts\Jobs\SendToTelegramChatJob::class,
 ];
 
 ```
@@ -74,14 +74,14 @@ use Marcorivm\TelegramAlerts\Facades\TelegramAlert;
 TelegramAlert::to('https://custom-url.com')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
-### Sending message to an alternative channel
+### Sending message to an alternative chat
 
-You can send a message to a channel other than the default one for the webhook, by passing it to the `toChannel` function.
+You can send a message to a chat other than the default one for the webhook, by passing it to the `toChat` function.
 
 ```php
 use Marcorivm\TelegramAlerts\Facades\TelegramAlert;
 
-TelegramAlert::toChannel('subscription_alerts')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
+TelegramAlert::toChat('subscription_alerts')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
 ## Formatting

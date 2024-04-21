@@ -4,11 +4,11 @@ namespace Marcorivm\TelegramAlerts;
 
 use Marcorivm\TelegramAlerts\Exceptions\JobClassDoesNotExist;
 use Marcorivm\TelegramAlerts\Exceptions\WebhookUrlNotValid;
-use Marcorivm\TelegramAlerts\Jobs\SendToTelegramChannelJob;
+use Marcorivm\TelegramAlerts\Jobs\SendToTelegramChatJob;
 
 class Config
 {
-    public static function getJob(array $arguments): SendToTelegramChannelJob
+    public static function getJob(array $arguments): SendToTelegramChatJob
     {
         $jobClass = config('telegram-alerts.job');
 
@@ -36,5 +36,10 @@ class Config
         }
 
         return $url;
+    }
+
+    public static function getChatId(string $name): string|null
+    {
+        return config("telegram-alerts.chats.{$name}", null);
     }
 }
