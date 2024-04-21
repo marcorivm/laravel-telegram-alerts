@@ -2,8 +2,8 @@
 
 namespace Marcorivm\TelegramAlerts;
 
-use Marcorivm\LaravelPackageTools\Package;
-use Marcorivm\LaravelPackageTools\PackageServiceProvider;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class TelegramAlertsServiceProvider extends PackageServiceProvider
 {
