@@ -1,16 +1,16 @@
 <?php
 
-namespace Spatie\SlackAlerts\Tests;
+namespace Marcorivm\TelegramAlerts\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\SlackAlerts\SlackAlertsServiceProvider;
+use Marcorivm\TelegramAlerts\TelegramAlertsServiceProvider;
 
 class TestCase extends Orchestra
 {
     protected function getPackageProviders($app): array
     {
         return [
-            SlackAlertsServiceProvider::class,
+            TelegramAlertsServiceProvider::class,
         ];
     }
 }

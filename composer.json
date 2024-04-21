@@ -1,14 +1,18 @@
 {
-    "name": "spatie/laravel-slack-alerts",
-    "description": "Send a message to Slack",
+    "name": "marcorivm/laravel-telegram-alerts",
+    "description": "Send a message to Telegram",
     "keywords": [
-        "spatie",
         "laravel",
-        "laravel-slack-alerts"
+        "laravel-telegram-alerts"
     ],
-    "homepage": "https://github.com/spatie/laravel-slack-alerts",
+    "homepage": "https://github.com/marcorivm/laravel-telegram-alerts",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Marco Rivadeneyra  ",
+            "email": "marcorivm@gmail.com",
+            "role": "Developer"
+        },
         {
             "name": "Niels Vanpachtenbeke",
             "email": "niels@spatie.be",
@@ -38,13 +42,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\SlackAlerts\\": "src",
-            "Spatie\\SlackAlerts\\Database\\Factories\\": "database/factories"
+            "Marcorivm\\TelegramAlerts\\": "src",
+            "Marcorivm\\TelegramAlerts\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\SlackAlerts\\Tests\\": "tests"
+            "Marcorivm\\TelegramAlerts\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -62,10 +66,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\SlackAlerts\\SlackAlertsServiceProvider"
+                "Marcorivm\\TelegramAlerts\\TelegramAlertsServiceProvider"
             ],
             "aliases": {
-                "Slack": "SlackAlert"
+                "Telegram": "TelegramAlert"
             }
         }
     },

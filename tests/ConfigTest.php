@@ -1,9 +1,9 @@
 <?php
 
-use Spatie\SlackAlerts\Config;
+use Marcorivm\TelegramAlerts\Config;
 
 beforeEach(function () {
-    config()->set('slack-alerts.webhook_urls.default', 'https://default-domain.com');
+    config()->set('telegram-alerts.webhook_urls.default', 'https://default-domain.com');
 });
 
 it('can get a webhook url', function (string $name, string $result) {

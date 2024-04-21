@@ -1,6 +1,7 @@
+
 <?php
 
-namespace Spatie\SlackAlerts\Facades;
+namespace Marcorivm\TelegramAlerts\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -10,12 +11,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static void message(string $text)
  * @method static void blocks(array $blocks)
  *
- * @see \Spatie\SlackAlerts\SlackAlert
+ * @see \Marcorivm\TelegramAlerts\TelegramAlert
  */
-class SlackAlert extends Facade
+class TelegramAlert extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'laravel-slack-alerts';
+        return 'laravel-telegram-alerts';
     }
 }

@@ -1,18 +1,18 @@
 <?php
 
-namespace Spatie\SlackAlerts;
+namespace Marcorivm\TelegramAlerts;
 
-use Spatie\SlackAlerts\Exceptions\JobClassDoesNotExist;
-use Spatie\SlackAlerts\Exceptions\WebhookUrlNotValid;
-use Spatie\SlackAlerts\Jobs\SendToSlackChannelJob;
+use Marcorivm\TelegramAlerts\Exceptions\JobClassDoesNotExist;
+use Marcorivm\TelegramAlerts\Exceptions\WebhookUrlNotValid;
+use Marcorivm\TelegramAlerts\Jobs\SendToTelegramChannelJob;
 
 class Config
 {
-    public static function getJob(array $arguments): SendToSlackChannelJob
+    public static function getJob(array $arguments): SendToTelegramChannelJob
     {
-        $jobClass = config('slack-alerts.job');
+        $jobClass = config('telegram-alerts.job');
 
-        if (is_null($jobClass) || ! class_exists($jobClass)) {
+        if (is_null($jobClass) || !class_exists($jobClass)) {
             throw JobClassDoesNotExist::make($jobClass);
         }
 
@@ -25,9 +25,9 @@ class Config
             return $name;
         }
 
-        $url = config("slack-alerts.webhook_urls.{$name}");
+        $url = config("telegram-alerts.webhook_urls.{$name}");
 
-        if (! $url) {
+        if (!$url) {
             return null;
         }
 

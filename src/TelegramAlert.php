@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\SlackAlerts;
+namespace Marcorivm\TelegramAlerts;
 
-class SlackAlert
+class TelegramAlert
 {
     protected string $webhookUrlName = 'default';
     protected ?string $channel = null;
@@ -25,7 +25,7 @@ class SlackAlert
     {
         $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
 
-        if (! $webhookUrl) {
+        if (!$webhookUrl) {
             return;
         }
 
@@ -42,7 +42,7 @@ class SlackAlert
     {
         $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
 
-        if (! $webhookUrl) {
+        if (!$webhookUrl) {
             return;
         }
 
