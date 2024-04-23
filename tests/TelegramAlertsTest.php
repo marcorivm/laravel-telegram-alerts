@@ -10,40 +10,20 @@ beforeEach(function () {
     Bus::fake();
 });
 
-it('can dispatch a job to send a message to telegram using the default webhook url', function () {
-    config()->set('telegram-alerts.webhook_urls.default', 'https://test-domain.com');
+it('can dispatch a job to send a message to telegram using the default chat', function () {
+    config()->set('telegram-alerts.chats.default', '-1234567890');
+    config()->set('telegram-alerts.bot_config.token', 'abc:123');
 
     TelegramAlert::message('test-data');
 
     Bus::assertDispatched(SendToTelegramChatJob::class);
 });
 
-it('can dispatch a job to send a set of blocks to telegram using the default webhook url', function () {
-    config()->set('telegram-alerts.webhook_urls.default', 'https://test-domain.com');
-
-    TelegramAlert::blocks([
-        [
-            "type" => "section",
-            "text" => [
-                "type" => "mrkdwn",
-                "text" => "Hello!",
-            ],
-        ],
-    ]);
-
-    Bus::assertDispatched(SendToTelegramChatJob::class);
-});
-
-it('can dispatch a job to send a message to telegram using an alternative webhook url', function () {
-    config()->set('telegram-alerts.webhook_urls.marketing', 'https://test-domain.com');
-
-    TelegramAlert::to('marketing')->message('test-data');
-
-    Bus::assertDispatched(SendToTelegramChatJob::class);
-});
 
 it('can dispatch a job to send a message to telegram alternative chat', function () {
-    config()->set('telegram-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('telegram-alerts.chats.default', '-1234567890');
+    config()->set('telegram-alerts.chats.random', '-1234567891');
+    config()->set('telegram-alerts.bot_config.token', 'abc:123');
 
     TelegramAlert::toChat('random')->message('test-data');
 
@@ -51,33 +31,38 @@ it('can dispatch a job to send a message to telegram alternative chat', function
 });
 
 it('will throw an exception for a non existing job class', function () {
-    config()->set('telegram-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('telegram-alerts.chats.default', '-1234567890');
+    config()->set('telegram-alerts.bot_config.token', 'abc:123');
     config()->set('telegram-alerts.job', 'non-existing-job');
 
     TelegramAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);
 
-it('will not throw an exception for an empty webhook url', function () {
-    config()->set('telegram-alerts.webhook_urls.default', '');
+it('will not throw an exception for an empty bot token', function () {
+    config()->set('telegram-alerts.bot_config.token', '');
+    config()->set('telegram-alerts.chats.default', '-1234567890');
 
     TelegramAlert::message('test-data');
 })->expectNotToPerformAssertions();
 
-it('will throw an exception for an invalid webhook url', function () {
-    config()->set('telegram-alerts.webhook_urls.default', 'not-an-url');
+it('will not throw an exception for an empty default chat', function () {
+    config()->set('telegram-alerts.bot_config.token', 'abc:123');
+    config()->set('telegram-alerts.chats.default', '');
 
     TelegramAlert::message('test-data');
-})->throws(WebhookUrlNotValid::class);
+})->expectNotToPerformAssertions();
 
 it('will throw an exception for an invalid job class', function () {
-    config()->set('telegram-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('telegram-alerts.chats.default', '-1234567890');
+    config()->set('telegram-alerts.bot_config.token', 'abc:123');
     config()->set('telegram-alerts.job', '');
 
     TelegramAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);
 
 it('will throw an exception for a missing job class', function () {
-    config()->set('telegram-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('telegram-alerts.chats.default', '-1234567890');
+    config()->set('telegram-alerts.bot_config.token', 'abc:123');
     config()->set('telegram-alerts.job', null);
 
     TelegramAlert::message('test-data');

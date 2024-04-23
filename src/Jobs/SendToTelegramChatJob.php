@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
 
 class SendToTelegramChatJob implements ShouldQueue
 {
@@ -24,7 +23,6 @@ class SendToTelegramChatJob implements ShouldQueue
     public int $maxExceptions = 3;
 
     public function __construct(
-        public string $webhookUrl,
         public string $text,
         public string $chatId,
     ) {
@@ -33,10 +31,22 @@ class SendToTelegramChatJob implements ShouldQueue
     public function handle(): void
     {
         $payload = [
-            'text' => $this->text,
             'chat_id' => $this->chatId,
+            'text' => $this->text,
         ];
 
-        Http::post($this->webhookUrl, $payload)->throw();
+        $telegram = $this->getTelegramBot();
+
+        $response = $telegram->sendMessage(
+            $payload
+        );
+    }
+
+    protected function getTelegramBot(): \Telegram\Bot\Api
+    {
+        $config = config('telegram');
+        $config['bots'] = ['telegram-alerts' => config('telegram-alerts.bot_config')];
+        $botManager = new \Telegram\Bot\BotsManager($config);
+        return $botManager->bot('telegram-alerts');
     }
 }

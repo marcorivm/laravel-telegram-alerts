@@ -31,11 +31,12 @@ This is the contents of the published config file:
 
 ```php
 return [
-    /*
-     * The webhook URLs that we'll use to send a message to Telegram.
-     */
-    'webhook_urls' => [
-        'default' => env('TELEGRAM_ALERT_WEBHOOK'),
+    'bot_config' => [
+        'token' => env('TELEGRAM_ALERT_BOT_TOKEN'),
+    ],
+
+    'chats' => [
+        'default' => env('TELEGRAM_ALERT_DEFAULT_CHAT'),
     ],
 
     /*
@@ -44,6 +45,7 @@ return [
      */
     'job' => Marcorivm\TelegramAlerts\Jobs\SendToTelegramChatJob::class,
 ];
+
 
 ```
 
@@ -55,24 +57,6 @@ To send a message to Telegram, simply call `TelegramAlert::message()` and pass i
 TelegramAlert::message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
-
-The webhook to be used can be chosen using the `to` function.
-
-```php
-use Marcorivm\TelegramAlerts\Facades\TelegramAlert;
-
-TelegramAlert::to('marketing')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
-```
-
-### Using a custom webhooks
-
-The `to` function also supports custom webhook urls.
-
-```php
-use Marcorivm\TelegramAlerts\Facades\TelegramAlert;
-
-TelegramAlert::to('https://custom-url.com')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
-```
 
 ### Sending message to an alternative chat
 
@@ -103,11 +87,11 @@ TelegramAlert::message("<https://spatie.be|This is a link to our homepage>");
 
 ### Mentioning
 
-You can use mentions to notify users and groups.
+You can use mentions to notify users.
 ```php
 use Marcorivm\TelegramAlerts\Facades\TelegramAlert;
 
-TelegramAlert::message("A message that notifies <@username> and everyone else who is <!here>")
+TelegramAlert::message("A message that notifies <@username>")
 
 ```
 
@@ -162,6 +146,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
+- [Marco Rivadeneyra](https://github.com/marcorivm)
 - [Niels Vanpachtenbeke](https://github.com/Nielsvanpach)
 - [Freek Van der Herten](https://github.com/freekmurze)
 - [All Contributors](../../contributors)

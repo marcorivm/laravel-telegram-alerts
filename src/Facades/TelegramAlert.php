@@ -1,4 +1,3 @@
-
 <?php
 
 namespace Marcorivm\TelegramAlerts\Facades;

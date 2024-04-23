@@ -1,11 +1,8 @@
 <?php
 
 return [
-    /*
-     * The webhook URLs that we'll use to send a message to Telegram.
-     */
-    'webhook_urls' => [
-        'default' => env('TELEGRAM_ALERT_WEBHOOK'),
+    'bot_config' => [
+        'token' => env('TELEGRAM_ALERT_BOT_TOKEN'),
     ],
 
     'chats' => [

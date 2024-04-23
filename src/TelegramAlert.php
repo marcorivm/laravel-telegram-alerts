@@ -23,12 +23,6 @@ class TelegramAlert
 
     public function message(string $text): void
     {
-        $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
-
-        if (!$webhookUrl) {
-            return;
-        }
-
         $chatId = $this->chatName ? Config::getChatId($this->chatName) : Config::getChatId('default');
 
         if (!$chatId) {
@@ -38,7 +32,6 @@ class TelegramAlert
 
         $job = Config::getJob([
             'text' => $text,
-            'webhookUrl' => $webhookUrl,
             'chatId' => $chatId,
         ]);
 
